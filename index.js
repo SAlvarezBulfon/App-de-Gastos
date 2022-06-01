@@ -13,10 +13,11 @@ add.addEventListener('click',(e) => {
     const persona = nombre.value;
     let suma = 0;
 
-     if(dinero !== '' && persona !== ''){
+     if(dinero !== '' && persona !== '' && parseFloat(dinero) > 0){
         const li = document.createElement('li');
         const p = document.createElement('p');
-         p.textContent = `${persona} gastó: $${dinero}`;
+        p.className = "parrafo-li";
+         p.textContent = `${persona} gastó $${dinero}`;
         //Suma del dinero
          montos.push(dinero);
          for(let i = 0; i < montos.length; i++){
@@ -27,7 +28,8 @@ add.addEventListener('click',(e) => {
          Swal.fire({
             icon: 'success',
             title: 'Aquí está lo que deben pagar',
-            text: `El total a pagar es de $${suma} y le corresponde a cada uno $${promedio}`,
+            text: `El total a pagar es de $${suma} y le corresponde a cada uno $${promedio.toFixed(2)}`,
+            confirmButtonColor: "#518b00"
           });
 
 
@@ -51,20 +53,18 @@ add.addEventListener('click',(e) => {
      }else{
         Swal.fire({
             icon: 'error',
-            title: '¡Vaya, no puedo ver nada!',
-            text: 'No has ingresado un nombre y/o monto',
+            title: 'No ha ingresado un nombre y/o monto',
+            text: 'También puede ser que esté ingresando un valor no válido',
+            confirmButtonColor: "#518b00"
           })
      }
 
 });
 
-
-
-
 function addDeleteBtn(){
     const eliminar = document.createElement('button');
     eliminar.textContent = "X";
-    eliminar.className = "btn btn-danger";
+    eliminar.className = "btn btn-danger btnDelete";
 
     eliminar.addEventListener('click',(e) => {
             montos.splice(0, montos.length);
