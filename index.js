@@ -20,15 +20,15 @@ add.addEventListener('click',(e) => {
          p.textContent = `${persona} gastó $${dinero}`;
         //Suma del dinero
          montos.push(dinero);
-         for(let i = 0; i < montos.length; i++){
-             suma += (parseFloat(montos[i]));
-             
+         for(const monto of montos){
+             suma += (parseFloat(monto));         
          }
          let promedio = suma / montos.length;
+         
          Swal.fire({
             icon: 'success',
             title: 'Aquí está lo que deben pagar',
-            text: `El total a pagar es de $${suma} y le corresponde a cada uno $${promedio.toFixed(2)}`,
+            text: `El total a pagar es de $${suma.toFixed(2)} y le corresponde a cada uno $${promedio.toFixed(2)}`,
             confirmButtonColor: "#518b00"
           });
 
@@ -60,14 +60,19 @@ add.addEventListener('click',(e) => {
      }
 
 });
-
+function eliminarDelArray(lista, elemento){
+    return lista.filter((l) => l !== elemento); /* Te quita un elemento del string */
+}
 function addDeleteBtn(){
     const eliminar = document.createElement('button');
     eliminar.textContent = "X";
     eliminar.className = "btn btn-danger btnDelete";
 
     eliminar.addEventListener('click',(e) => {
-            montos.splice(0, montos.length);
+        const str = e.target.parentElement.children[0].innerHTML;
+        const index = str.indexOf('$') + 1 ;
+        const monto = str.substring(index, str.length);
+        montos = eliminarDelArray(montos, monto);
         //Aquí agarramos el elemento de arriba, en este caso el li;
             const item = e.target.parentElement;
             ul.removeChild(item);
@@ -75,3 +80,4 @@ function addDeleteBtn(){
     });
     return eliminar;
 }
+
